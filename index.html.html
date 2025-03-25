@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Trivia Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #555;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #444;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .jenson {
+            width: 100px;
+        }
+        .question {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .green { background-color: green; color: white; }
+        .yellow { background-color: yellow; color: black; }
+        .red { background-color: red; color: white; }
+        .blue { background-color: deepskyblue; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://i.imgur.com/JkNwXM8.png" class="robot" alt="Robot">
+        <h2>Hi, Jenson Button here. Let's test your F1 knowledge!</h2>
+        <div class="question" id="question">Loading...</div>
+        <button class="btn green" onclick="checkAnswer(0)"></button>
+        <button class="btn yellow" onclick="checkAnswer(1)"></button>
+        <button class="btn red" onclick="checkAnswer(2)"></button>
+        <button class="btn blue" onclick="checkAnswer(3)"></button>
+        <p id="score">Score: 0</p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Who holds the record for the most Formula 1 World Championships?",
+                answers: ["Lewis Hamilton", "Michael Schumacher", "Sebastian Vettel", "Ayrton Senna"],
+                correct: 1
+            },
+            {
+                question: "Which current F1 team is set to become Audi Sauber in 2026?",
+                answers: ["Williams", "Haas", "Kick Sauber", "Aston Martin"],
+                correct: 2
+            },
+            {
+                question: "What is the only F1 race that has been held at night since its debut?",
+                answers: ["Monaco Grand Prix", "Singapore Grand Prix", "Abu Dhabi Grand Prix", "Bahrain Grand Prix"],
+                correct: 1
+            },
+            {
+                question: "Which legendary driver famously said, 'If you no longer go for a gap that exists, you are no longer a racing driver'?",
+                answers: ["Alain Prost", "Ayrton Senna", "Niki Lauda", "Fernando Alonso"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            document.getElementById("question").innerText = questions[currentQuestion].question;
+            document.querySelectorAll(".btn").forEach((button, index) => {
+                button.innerText = questions[currentQuestion].answers[index];
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (selected === questions[currentQuestion].correct) {
+                score++;
+            }
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("question").innerText = "Game Over! Final Score: " + score;
+                document.querySelectorAll(".btn").forEach(button => button.style.display = "none");
+            }
+            document.getElementById("score").innerText = "Score: " + score;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
